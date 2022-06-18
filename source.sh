@@ -1,47 +1,47 @@
 #!/usr/bin/env bash
 
-# A best practices Bash script template with many useful functions. This file
-# is suitable for sourcing into other scripts and so only contains functions
-# which are unlikely to need modification. It omits the following functions:
+# Шаблон сценария Bash с лучшими практиками и множеством полезных функций. Этот файл
+# подходит для поиска в других скриптах и ​​поэтому содержит только функции
+# которые вряд ли потребуют модификации. В нем отсутствуют следующие функции:
 # - main()
 # - parse_params()
 # - script_usage()
 
-# DESC: Handler for unexpected errors
+# DESC: Обработчик непредвиденных ошибок
 # ARGS: $1 (optional): Exit code (defaults to 1)
 # OUTS: None
 function script_trap_err() {
     local exit_code=1
 
-    # Disable the error trap handler to prevent potential recursion
+    # Отключите обработчик ловушки ошибок, чтобы предотвратить возможную рекурсию
     trap - ERR
 
-    # Consider any further errors non-fatal to ensure we run to completion
+    # Считайте любые дальнейшие ошибки нефатальными, чтобы убедиться, что мы работаем до конца
     set +o errexit
     set +o pipefail
 
-    # Validate any provided exit code
+    # Проверить любой предоставленный код выхода
     if [[ ${1-} =~ ^[0-9]+$ ]]; then
         exit_code="$1"
     fi
 
-    # Output debug data if in Cron mode
+    # Вывод данных отладки, если в режиме Cron
     if [[ -n ${cron-} ]]; then
-        # Restore original file output descriptors
+        # Восстановить исходные дескрипторы вывода файла
         if [[ -n ${script_output-} ]]; then
             exec 1>&3 2>&4
         fi
 
-        # Print basic debugging information
+        # Распечатать основную отладочную информацию
         printf '%b\n' "$ta_none"
         printf '***** Abnormal termination of script *****\n'
         printf 'Script Path:            %s\n' "$script_path"
         printf 'Script Parameters:      %s\n' "$script_params"
         printf 'Script Exit Code:       %s\n' "$exit_code"
 
-        # Print the script log if we have it. It's possible we may not if we
-        # failed before we even called cron_init(). This can happen if bad
-        # parameters were passed to the script so we bailed out very early.
+        # Распечатать журнал скрипта, если он у нас есть. Возможно, мы не можем, если мы
+        # произошел сбой еще до того, как мы вызвали cron_init(). Это может случиться, если плохо
+        # Сценарию были переданы # параметры, так что мы выручили очень рано.
         if [[ -n ${script_output-} ]]; then
             # shellcheck disable=SC2312
             printf 'Script Output:\n\n%s' "$(cat "$script_output")"
@@ -50,27 +50,27 @@ function script_trap_err() {
         fi
     fi
 
-    # Exit with failure status
+    # Выход со статусом ошибки
     exit "$exit_code"
 }
 
-# DESC: Handler for exiting the script
+# DESC: Обработчик выхода из скрипта
 # ARGS: None
 # OUTS: None
 function script_trap_exit() {
     cd "$orig_cwd"
 
-    # Remove Cron mode script log
+    # Удалить журнал сценариев режима Cron
     if [[ -n ${cron-} && -f ${script_output-} ]]; then
         rm "$script_output"
     fi
 
-    # Remove script execution lock
+    # Снять блокировку выполнения скрипта
     if [[ -d ${script_lock-} ]]; then
         rmdir "$script_lock"
     fi
 
-    # Restore terminal colours
+    # Восстановить цвета терминала
     printf '%b' "$ta_none"
 }
 
