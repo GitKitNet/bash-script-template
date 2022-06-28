@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 
+
+function pause() { read -p "Press [Enter] key to continue..." fackEnterKey; }
+function wait() { read -p "Press [ANY] key to continue..? " -s -n 1; }
+
 # A best practices Bash script template with many useful functions. This file
 # combines the source.sh & script.sh files into a single script. If you want
 # your script to be entirely self-contained then this should be what you want!
@@ -501,22 +505,22 @@ function MENU_MAIN() {
     clear;
     echo -e -n "\n\t${GREEN}${BGBlack}==== MAIN MENU ====${NC}\n"
     echo -e -n "${Yellow}
-\t1. Create SSH key     ${NC} ${Purple}
-\t2. Install LEMP       ${NC} ${BLUE}
-\t3. Install LAMP       ${NC} ${Yellow}
-\t4. Control Panel      ${NC} ${MAGENTO}
+\t1. Free               ${NC} ${Purple}
+\t2. Free               ${NC} ${BLUE}
+\t3. Free               ${NC} ${Yellow}
+\t4. Free               ${NC} ${MAGENTO}
 \t5. Free               ${NC} ${RED}
 \t6. Free               ${NC} ${RED}
 \t7. Free               ${NC} ${MAGENTO}
-\t8. FTP & Ather        ${NC} ${RED}
+\t8. Free               ${NC} ${RED}
 \n\tq. Quit...          ${NC}";
 
 }
 
-#   Menu SSH
-function MenuSSH() {
-title="Generate Key SSH";
-echo -e -n "\n\t${GREEN}SSH KeyGen:${NC}\n"
+#   Menu 1
+function Menu1() {
+title="Main Menu 1";
+echo -e -n "\n\t${GREEN}Menu 1:${NC}\n"
 echo -e -n "
 \t1. $title ${GREEN} ED25519       ${NC}
 \t2. $title ${Yellow} RSA          ${NC}
@@ -528,8 +532,8 @@ echo -e -n "
 
 }
 
-##   LEMP MENU 
-function MenuLEMP() {
+##   MENU 2
+function Menu2() {
 echo -e -n "\n\t ${GREEN}LEMP installation & Settings:${NC} \n"
 echo -e -n "\t1. Install Mysql-Server ${CYAN}With WordPress LAND ${NC}"
 echo -e -n "\t2. Add one more WordPress LAND ${CYAN}With New user ${NC}"
@@ -540,7 +544,7 @@ echo -e -n "\n\tq/0. Back ${NC}\n";
 }
 
 ##   MENU 3: LAMP
-function MenuLAMP() {
+function Menu3() {
     echo -e "\n\t ${GREEN}LAMP installation & Settings:${NC} \n"
     echo -e -n "${Yellow}";
     echo -e -n "\t1. Install LAMP & WordPress";
@@ -552,22 +556,22 @@ function MenuLAMP() {
 
 ##   MENU 4: Web Control Panel
 function Menu_CPanel() {
-    echo -e "\n\t ${GREEN}Menu 4: CONTROL PANEL ${Yellow} \n";
-    echo -e "\t1. Install OwnCloud       ${PURPLE} ";
-    echo -e "\t2. Install Vesta          ${BLUE} ";
-    echo -e "\t3. FREE                   ${PURPLE} ";
-    echo -e "\t4. FREE                   ${RED} ";
-    echo -e "\n\tq/0. Back               ${NC}\n ";
+    echo -e "\n\t ${GREEN}Menu 4: ${Yellow} \n";
+    echo -e "\t1. Free             ${PURPLE} ";
+    echo -e "\t2. Free             ${BLUE} ";
+    echo -e "\t3. FREE             ${PURPLE} ";
+    echo -e "\t4. FREE             ${RED} ";
+    echo -e "\n\tq/0. Back         ${NC}\n ";
 };
 
 ##   MENU 8: Modules & Components
 function MenuMODandCOMPON() {
     echo -e "\n\t ${GREEN}Menu 8: Modules & Components ${Yellow} \n";
-    echo -e "\t1. Install Pure-FTP       ${PURPLE} ";
-    echo -e "\t2. FREE                            ${PURPLE} ";
-    echo -e "\t3. FREE                            ${PURPLE} ";
-    echo -e "\t4. FREE                            ${RED} ";
-    echo -e "\n\t0. Back                          ${NC}\n ";
+    echo -e "\t1. FREE       ${PURPLE} ";
+    echo -e "\t2. FREE       ${PURPLE} ";
+    echo -e "\t3. FREE       ${PURPLE} ";
+    echo -e "\t4. FREE       ${RED} ";
+    echo -e "\n\t0. Back     ${NC}\n ";
 };
 # MenuCPanel
 
@@ -611,11 +615,11 @@ do
                         echo -n -e "\n\tSelection: "
                         read -n1 opt;
                         case $opt in
-                                1) first ;;
-                                2) second ;;
-                                3) third ;;
-                                4) fourth ;;
-                                5) fifth ;;
+                                1) echo -e "FREE $opt" ;pause ;;
+                                2) echo -e "FREE $opt"  ;;
+                                3) echo -e "FREE $opt"  ;;
+                                4) echo -e "FREE $opt"  ;;
+                                5) echo -e "FREE $opt"  ;;
                                 /q | q | 0) break ;;
                                 *) ;;
                         esac
@@ -631,7 +635,7 @@ do
                         echo -n -e "\n\tSelection: "
                         read -n1 opt;
                         case $opt in
-                                1) installLAMP ;;
+                                1) echo -e "FREE $opt"  ;;
                                 2) echo -e "MENU 3 - SUBmenu 2" ;;
                                 3) echo -e "MENU 3 - SUBmenu 3" ;;
                                 /q | q | 0) break ;;
@@ -649,8 +653,8 @@ do
                         echo -n -e "\n\tSelection: "
                         read -n1 opt;
                         case $opt in
-                                1) OWNCLOUD ;;
-                                2) Inst_VESTA ;;
+                                1) echo -e "FREE $opt"  ;;
+                                2) echo -e "FREE $opt"  ;;
                                 3) echo -e "FREE $opt"  ;;
                                 4) echo -e "FREE $opt"  ;;
                                 5) echo -e "FREE $opt"  ;;
